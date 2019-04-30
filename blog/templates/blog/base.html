@@ -1,0 +1,14 @@
+{% load static %}
+<head>
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+</head>
+
+<body>
+    <h1><strong>여기는 예린의 블로그 입니다</strong></h1>
+    <div>
+        <a href = "{% url 'new' %}">새 글 쓰기</a>
+        <a href = "{% url 'home' %}">홈으로 가기</a>
+    </div>
+    {% block content%}
+    {% endblock %}
+</body>
