@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h1>안녕 나는 디테일이야!</h1>
+    
     <div>
         <h2>{{post.title}}</h2>
         <p>{{post.created_date}}</p>
@@ -11,5 +11,33 @@
         <a href = "{% url 'edit' post.id %}">수정하기</a>
         <a href = "{% url 'delete' post.id %}">삭제하기</a>
     </div>
+
+    <hr>
+
+    <p>댓글 {{ post.comments.count }}개</p>
+    <div class="form-group">
+        <h4>댓글 작성</h4>
+        <form method ="POST" action="{% url 'add_comment' post.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type = "submit" class="save btn btn-default">작성</button>
+        </form>
+
+    </div>
+
+
+    <br>
+    {% for comment in post.comments.all %}
+    <div>
+        <div>{{comment.created_date}}</div>
+        <strong>{{comment.nickname}}</strong>
+        {{comment.text|linebreaks}}
+        <a href = "{% url 'comment_delete' comment_id=comment.id %}" onclick="return confirm('정말로 삭제하시겠습니까?')">댓글 삭제</a>
+        <br><br>
+        
+    </div>
+    {% empty %}
+    <p>아무 댓글이 없어요</p>
+    {% endfor %}
 
 {% endblock %}
